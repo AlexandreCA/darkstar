@@ -24,6 +24,7 @@ This file is part of DarkStar-server source code.
 #include "party_effects.h"
 #include "../party.h"
 #include "../entities/battleentity.h"
+#include "../status_effect_container.h"
 
 CPartyEffectsPacket::CPartyEffectsPacket()
 {
@@ -38,13 +39,5 @@ void CPartyEffectsPacket::AddMemberEffects(CBattleEntity* PMember)
     ref<uint16>(members * 0x30 + 0x08) = PMember->targid;
     ref<uint64>(members * 0x30 + 0x0C) = PMember->StatusEffectContainer->m_Flags;
     memcpy(data + (members * 0x30 + 0x14), PMember->StatusEffectContainer->m_StatusIcons, 32);
-    ++members;
-}
-
-void CPartyEffectsPacket::AddMemberEffects(uint32 id)
-{
-    DSP_DEBUG_BREAK_IF(members == 5);
-    ref<uint32>(members * 0x30 + 0x04) = id;
-    memset(data + (members * 0x30 + 0x14), 0xFF, 32);
     ++members;
 }

@@ -85,18 +85,18 @@ INSERT INTO `treasure_spawn_points` VALUES (17359048,3,133,63.413,-0.081,11.611)
 INSERT INTO `treasure_spawn_points` VALUES (17359048,4,65,12.770,-0.383,36.825); -- Yughott Grotto
 INSERT INTO `treasure_spawn_points` VALUES (17359048,5,230,-12.144,-0.206,-63.396); -- Yughott Grotto
 INSERT INTO `treasure_spawn_points` VALUES (17359048,6,253,-151.230,-0.359,-21.489); -- Yughott Grotto
-INSERT INTO `treasure_spawn_points` VALUES (17363366,0,227,250.037,-32.069,174.156); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,1,255,241.950,-31.769,59.927); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,2,190,259.068,-31.625,-71.901); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,3,60,219.331,-31.595,4.665); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,4,197,216.795,-31.527,-71.373); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,5,160,262.397,-32.202,87.518); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,6,190,179.993,-31.956,93.280); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,7,60,139.909,-31.957,146.845); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,8,209,99.115,-32.000,83.067); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,9,111,21.141,-31.944,81.473); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,10,60,59.776,-31.592,5.373); -- Palborough Mines
-INSERT INTO `treasure_spawn_points` VALUES (17363366,11,60,99.917,-32.000,-41.557); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,0,227,250.037,-32.069,174.156); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,1,255,241.950,-31.769,59.927); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,2,190,259.068,-31.625,-71.901); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,3,60,219.331,-31.595,4.665); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,4,197,216.795,-31.527,-71.373); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,5,160,262.397,-32.202,87.518); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,6,190,179.993,-31.956,93.280); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,7,60,139.909,-31.957,146.845); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,8,209,99.115,-32.000,83.067); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,9,111,21.141,-31.944,81.473); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,10,60,59.776,-31.592,5.373); -- Palborough Mines
+INSERT INTO `treasure_spawn_points` VALUES (17363367,11,60,99.917,-32.000,-41.557); -- Palborough Mines
 INSERT INTO `treasure_spawn_points` VALUES (17371604,0,52,-158.563,0.999,-226.058); -- Giddeus
 INSERT INTO `treasure_spawn_points` VALUES (17371604,1,150,-103.777,-0.900,-254.271); -- Giddeus
 INSERT INTO `treasure_spawn_points` VALUES (17371604,2,70,-242.625,0.935,-185.404); -- Giddeus
@@ -291,20 +291,20 @@ INSERT INTO `treasure_spawn_points` VALUES (17596808,6,101,14.274,6.000,214.198)
 INSERT INTO `treasure_spawn_points` VALUES (17596808,7,192,-7.949,-0.143,296.822); -- Garlaige Citadel
 INSERT INTO `treasure_spawn_points` VALUES (17596808,8,2,-88.405,4.784,299.916); -- Garlaige Citadel
 INSERT INTO `treasure_spawn_points` VALUES (17596808,9,128,-142.400,0.000,328.437); -- Garlaige Citadel
-INSERT INTO `treasure_spawn_points` VALUES (17613235,0,91,170.680,-24.000,210.826); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,1,156,172.161,-24.006,-88.152); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,2,131,210.956,-24.000,-31.915); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,3,226,112.361,-24.008,-52.220); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,4,142,136.771,-24.000,43.430); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,5,23,102.932,-24.000,76.664); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,6,92,170.954,-24.000,131.078); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,7,228,28.788,-16.000,108.641); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,8,232,-8.153,-16.000,61.675); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,9,43,-45.479,-16.009,93.216); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,10,2,-116.587,-16.000,29.954); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,11,53,-164.008,-16.003,95.594); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,12,193,-190.058,-16.000,3.435); -- Fei'Yin
-INSERT INTO `treasure_spawn_points` VALUES (17613235,13,13,-95.248,-16.005,164.285); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,0,91,170.680,-24.000,210.826); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,1,156,172.161,-24.006,-88.152); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,2,131,210.956,-24.000,-31.915); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,3,226,112.361,-24.008,-52.220); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,4,142,136.771,-24.000,43.430); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,5,23,102.932,-24.000,76.664); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,6,92,170.954,-24.000,131.078); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,7,228,28.788,-16.000,108.641); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,8,232,-8.153,-16.000,61.675); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,9,43,-45.479,-16.009,93.216); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,10,2,-116.587,-16.000,29.954); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,11,53,-164.008,-16.003,95.594); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,12,193,-190.058,-16.000,3.435); -- Fei'Yin
+INSERT INTO `treasure_spawn_points` VALUES (17613238,13,13,-95.248,-16.005,164.285); -- Fei'Yin
 INSERT INTO `treasure_spawn_points` VALUES (17649896,0,3,50.829,3.684,-27.560); -- Labyrinth of Onzozo
 INSERT INTO `treasure_spawn_points` VALUES (17649896,1,130,168.573,0.470,-139.665); -- Labyrinth of Onzozo
 INSERT INTO `treasure_spawn_points` VALUES (17649896,2,8,110.267,0.473,-81.732); -- Labyrinth of Onzozo

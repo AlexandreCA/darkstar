@@ -3,26 +3,26 @@
 --   Mob: Wespe
 -----------------------------------
 
+require("scripts/globals/groundsofvalor");
 require("scripts/zones/Crawlers_Nest/MobIDs");
 
 -----------------------------------
 -- onMobDeath
 -----------------------------------
 
-function onMobDeath(mob,killer)
+function onMobDeath(mob,killer,ally)
 
-    checkGoVregime(killer,mob,691,2);
+    checkGoVregime(ally,mob,691,2);
 
-    local mob = mob:getID();
-    if (Demonic_Tiphia_PH[mob] ~= nil) then
-
+    local mobID = mob:getID();
+    if (Demonic_Tiphia_PH[mobID] ~= nil) then
         local ToD = GetServerVariable("[POP]Demonic_Tiphia");
         if (ToD <= os.time(t) and GetMobAction(Demonic_Tiphia) == 0) then
-            if (math.random((1),(20)) == 5) then
+            if (math.random(1,20) == 5) then
                 UpdateNMSpawnPoint(Demonic_Tiphia);
-                GetMobByID(Demonic_Tiphia):setRespawnTime(GetMobRespawnTime(mob));
-                SetServerVariable("[PH]Demonic_Tiphia", mob);
-                DeterMob(mob, true);
+                GetMobByID(Demonic_Tiphia):setRespawnTime(GetMobRespawnTime(mobID));
+                SetServerVariable("[PH]Demonic_Tiphia", mobID);
+                DeterMob(mobID, true);
             end
         end
     end

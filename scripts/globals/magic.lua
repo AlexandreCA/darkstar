@@ -1,7 +1,8 @@
-require("scripts/globals/magicburst")
-require("scripts/globals/status")
-require("scripts/globals/weather")
-require("scripts/globals/utils")
+require("scripts/globals/magicburst");
+require("scripts/globals/status");
+require("scripts/globals/weather");
+require("scripts/globals/utils");
+require("scripts/globals/settings");
 
     MMSG_BUFF_FAIL = 75;
 
@@ -49,9 +50,7 @@ require("scripts/globals/utils")
     elementalObiWeak = {MOD_FORCE_WATER_DWBONUS, MOD_FORCE_WIND_DWBONUS, MOD_FORCE_LIGHTNING_DWBONUS, MOD_FORCE_ICE_DWBONUS, MOD_FORCE_FIRE_DWBONUS, MOD_FORCE_EARTH_DWBONUS, MOD_FORCE_DARK_DWBONUS, MOD_FORCE_LIGHT_DWBONUS};
     spellAcc = {MOD_FIREACC, MOD_EARTHACC, MOD_WATERACC, MOD_WINDACC, MOD_ICEACC, MOD_THUNDERACC, MOD_LIGHTACC, MOD_DARKACC};
     strongAffinityDmg = {MOD_FIRE_AFFINITY_DMG, MOD_EARTH_AFFINITY_DMG, MOD_WATER_AFFINITY_DMG, MOD_WIND_AFFINITY_DMG, MOD_ICE_AFFINITY_DMG, MOD_THUNDER_AFFINITY_DMG, MOD_LIGHT_AFFINITY_DMG, MOD_DARK_AFFINITY_DMG};
-    weakAffinityDmg = {MOD_WATER_AFFINITY_DMG, MOD_WIND_AFFINITY_DMG, MOD_THUNDER_AFFINITY_DMG, MOD_ICE_AFFINITY_DMG, MOD_FIRE_AFFINITY_DMG, MOD_EARTH_AFFINITY_DMG, MOD_DARK_AFFINITY_DMG, MOD_LIGHT_AFFINITY_DMG};
     strongAffinityAcc = {MOD_FIRE_AFFINITY_ACC, MOD_EARTH_AFFINITY_ACC, MOD_WATER_AFFINITY_ACC, MOD_WIND_AFFINITY_ACC, MOD_ICE_AFFINITY_ACC, MOD_THUNDER_AFFINITY_ACC, MOD_LIGHT_AFFINITY_ACC, MOD_DARK_AFFINITY_ACC};
-    weakAffinityAcc = {MOD_WATER_AFFINITY_ACC, MOD_WIND_AFFINITY_ACC, MOD_THUNDER_AFFINITY_ACC, MOD_ICE_AFFINITY_ACC, MOD_FIRE_AFFINITY_ACC, MOD_EARTH_AFFINITY_ACC, MOD_DARK_AFFINITY_ACC, MOD_LIGHT_AFFINITY_ACC};
     resistMod = {MOD_FIRERES, MOD_EARTHRES, MOD_WATERRES, MOD_WINDRES, MOD_ICERES, MOD_THUNDERRES, MOD_LIGHTRES, MOD_DARKRES};
     defenseMod = {MOD_FIREDEF, MOD_EARTHDEF, MOD_WATERDEF, MOD_WINDDEF, MOD_ICEDEF, MOD_THUNDERDEF, MOD_LIGHTDEF, MOD_DARKDEF};
     absorbMod = {MOD_FIRE_ABSORB, MOD_EARTH_ABSORB, MOD_WATER_ABSORB, MOD_WIND_ABSORB, MOD_ICE_ABSORB, MOD_LTNG_ABSORB, MOD_LIGHT_ABSORB, MOD_DARK_ABSORB};
@@ -59,6 +58,7 @@ require("scripts/globals/utils")
     blmMerit = {MERIT_FIRE_MAGIC_POTENCY, MERIT_EARTH_MAGIC_POTENCY, MERIT_WATER_MAGIC_POTENCY, MERIT_WIND_MAGIC_POTENCY, MERIT_ICE_MAGIC_POTENCY, MERIT_LIGHTNING_MAGIC_POTENCY};
     rdmMerit = {MERIT_FIRE_MAGIC_ACCURACY, MERIT_EARTH_MAGIC_ACCURACY, MERIT_WATER_MAGIC_ACCURACY, MERIT_WIND_MAGIC_ACCURACY, MERIT_ICE_MAGIC_ACCURACY, MERIT_LIGHTNING_MAGIC_ACCURACY};
     blmAMIIMerit = {MERIT_FLARE_II, MERIT_QUAKE_II, MERIT_FLOOD_II, MERIT_TORNADO_II, MERIT_FREEZE_II, MERIT_BURST_II};
+    barSpells = {EFFECT_BARFIRE, EFFECT_BARSTONE, EFFECT_BARWATER, EFFECT_BARAERO, EFFECT_BARBLIZZARD, EFFECT_BARTHUNDER};
 
 -- USED FOR DAMAGING MAGICAL SPELLS (Stages 1 and 2 in Calculating Magic Damage on wiki)
 --Calculates magic damage using the standard magic damage calc.
@@ -213,26 +213,18 @@ function getCureFinal(caster,spell,basecure,minCure,isBlueMagic)
     local rapture = 1;
     if (isBlueMagic == false) then --rapture doesn't affect BLU cures as they're not white magic
         if (caster:hasStatusEffect(EFFECT_RAPTURE)) then
-            local equippedHead = caster:getEquipID(SLOT_HEAD);
-            if (equippedHead == 11183) then
-                rapture = 1.55; --savant's bonnet +1
-            elseif (equippedHead == 11083) then
-                rapture = 1.6; --savant's bonnet +2
-            else
-                rapture = 1.5;
-            end
+            rapture = 1.5 + caster:getMod(MOD_RAPTURE_AMOUNT)/100;
             caster:delStatusEffectSilent(EFFECT_RAPTURE);
         end
     end
+
     local dayWeatherBonus = 1;
     local ele = spell:getElement();
 
     local castersWeather = caster:getWeather();
-    local equippedMain = caster:getEquipID(SLOT_MAIN);
-    local equippedWaist = caster:getEquipID(SLOT_WAIST);
 
     if (castersWeather == singleWeatherStrong[ele]) then
-        if (equippedMain == 18632 or equippedMain == 18633) then
+        if (caster:getMod(MOD_IRIDESCENCE) >= 1) then
             if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1) then
                 dayWeatherBonus = dayWeatherBonus + 0.10;
             end
@@ -245,7 +237,7 @@ function getCureFinal(caster,spell,basecure,minCure,isBlueMagic)
             dayWeatherBonus = dayWeatherBonus - 0.10;
         end
     elseif (castersWeather == doubleWeatherStrong[ele]) then
-        if (equippedMain == 18632 or equippedMain == 18633) then
+        if (caster:getMod(MOD_IRIDESCENCE) >= 1) then
             if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1) then
                 dayWeatherBonus = dayWeatherBonus + 0.10;
             end
@@ -270,8 +262,8 @@ function getCureFinal(caster,spell,basecure,minCure,isBlueMagic)
         end
     end
 
-    if (dayWeatherBonus > 1.35) then
-        dayWeatherBonus = 1.35;
+    if (dayWeatherBonus > 1.4) then
+        dayWeatherBonus = 1.4;
     end
 
     local final = math.floor(math.floor(math.floor(math.floor(basecure) * potency) * dayWeatherBonus) * rapture) * dSeal;
@@ -291,7 +283,7 @@ end;
 
 function AffinityBonusDmg(caster,ele)
 
-    local affinity = caster:getMod(strongAffinityDmg[ele]) - caster:getMod(weakAffinityDmg[ele]) + caster:getMod(MOD_ALL_AFFINITY_DMG);
+    local affinity = caster:getMod(strongAffinityDmg[ele]);
     local bonus = 1.00 + affinity * 0.05; -- 5% per level of affinity
     -- print(bonus);
     return bonus;
@@ -299,7 +291,7 @@ end;
 
 function AffinityBonusAcc(caster,ele)
 
-    local affinity = caster:getMod(strongAffinityAcc[ele]) - caster:getMod(weakAffinityAcc[ele]) + caster:getMod(MOD_ALL_AFFINITY_ACC);
+    local affinity = caster:getMod(strongAffinityAcc[ele]);
     local bonus = 0 + affinity * 10; -- 10 acc per level of affinity
     -- print(bonus);
     return bonus;
@@ -322,9 +314,11 @@ end;
 function applyResistanceEffect(player,spell,target,diff,skill,bonus,effect)
 
     -- If Stymie is active, as long as the mob is not immune then the effect is not resisted
-    if (skill == ENFEEBLING_MAGIC_SKILL and player:hasStatusEffect(EFFECT_STYMIE) and target:canGainStatusEffect(effect)) then
-        player:delStatusEffect(EFFECT_STYMIE);
-        return 1;
+    if (effect ~= nil) then -- Dispel's script doesn't have an "effect" to send here, nor should it.
+        if (skill == ENFEEBLING_MAGIC_SKILL and player:hasStatusEffect(EFFECT_STYMIE) and target:canGainStatusEffect(effect)) then
+            player:delStatusEffect(EFFECT_STYMIE);
+            return 1;
+        end
     end
 
     if (skill == SINGING_SKILL and player:hasStatusEffect(EFFECT_TROUBADOUR)) then
@@ -356,14 +350,14 @@ function applyResistanceEffect(player,spell,target,diff,skill,bonus,effect)
     return getMagicResist(p);
 end;
 
---Applies resistance for things that may not be spells - ie. Quick Draw
+-- Applies resistance for things that may not be spells - ie. Quick Draw
 function applyResistanceAbility(player,target,element,skill,bonus)
     local p = getMagicHitRate(player, target, skill, element, 0, bonus);
 
     return getMagicResist(p);
 end;
 
---Applies resistance for additional effects
+-- Applies resistance for additional effects
 function applyResistanceAddEffect(player,target,element,bonus)
 
     local p = getMagicHitRate(player, target, 0, element, 0, bonus);
@@ -489,7 +483,7 @@ function getEffectResistance(target, effect)
         effectres = MOD_CURSERES;
     elseif (effect == EFFECT_WEIGHT) then
         effectres = MOD_GRAVITYRES;
-    elseif (effect == EFFECT_SLOW) then
+    elseif (effect == EFFECT_SLOW or effect == EFFECT_ELEGY) then
         effectres = MOD_SLOWRES;
     elseif (effect == EFFECT_STUN) then
         effectres = MOD_STUNRES;
@@ -565,20 +559,19 @@ end;
 function handleAfflatusMisery(caster, spell, dmg)
     if (caster:hasStatusEffect(EFFECT_AFFLATUS_MISERY)) then
         local misery = caster:getMod(MOD_AFFLATUS_MISERY);
+        local miseryMax = caster:getMaxHP() / 4;
 
-        --BGwiki puts the boost capping at 200% bonus at around 300hp
-        if (misery > 300) then
-            misery = 300;
+        -- BGwiki puts the boost capping at 200% bonus at 1/4th max HP.
+        if (misery > miseryMax) then
+            misery = miseryMax;
         end;
 
-        --So, if wee capped at 300, we'll make the boost it boost 2x (200% damage)
-        local boost = 1 + (misery / 300);
-
-        local preboost = dmg;
+        -- Damage is 2x at boost cap.
+        local boost = 1 + (misery / miseryMax);
 
         dmg = math.floor(dmg * boost);
 
-        --printf("AFFLATUS MISERY: Boosting %d -> %f, Final %d", preboost, boost, dmg);
+        -- printf("AFFLATUS MISERY: Damage boosted by %f to %d", boost, dmg);
 
         --Afflatus Mod is Used Up...
         caster:setMod(MOD_AFFLATUS_MISERY, 0)
@@ -614,6 +607,17 @@ end;
         -- end
     end
 
+    local skill = spell:getSkillType();
+    if (skill == ELEMENTAL_MAGIC_SKILL) then
+        dmg = dmg * ELEMENTAL_POWER;
+    elseif (skill == DARK_MAGIC_SKILL) then
+        dmg = dmg * DARK_POWER;
+    elseif (skill == NINJUTSU_SKILL) then
+        dmg = dmg * NINJUTSU_POWER;
+    elseif (skill == DIVINE_MAGIC_SKILL) then
+        dmg = dmg * DIVINE_POWER;
+    end
+
     dmg = target:magicDmgTaken(dmg);
 
     if (dmg > 0) then
@@ -630,10 +634,11 @@ end;
         spell:setMsg(7);
     else
         target:delHP(dmg);
+        target:handleAfflatusMiseryDamage(dmg);
         target:updateEnmityFromDamage(caster,dmg);
         -- Only add TP if the target is a mob
         if (target:getObjType() ~= TYPE_PC) then
-            target:addTP(10);
+            target:addTP(100);
         end
     end
 
@@ -736,13 +741,10 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
     dmg = math.floor(dmg * magicDefense);
 
     local dayWeatherBonus = 1.00;
-    local equippedMain = caster:getEquipID(SLOT_MAIN);
-    local equippedWaist = caster:getEquipID(SLOT_WAIST);
     local weather = caster:getWeather();
 
     if (weather == singleWeatherStrong[ele]) then
-        -- Iridescence
-        if (equippedMain == 18632 or equippedMain == 18633) then
+        if (caster:getMod(MOD_IRIDESCENCE) >= 1) then
             if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1 or isHelixSpell(spell)) then
                 dayWeatherBonus = dayWeatherBonus + 0.10;
             end
@@ -755,8 +757,7 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
             dayWeatherBonus = dayWeatherBonus - 0.10;
         end
     elseif (weather == doubleWeatherStrong[ele]) then
-        -- Iridescence
-        if (equippedMain == 18632 or equippedMain == 18633) then
+        if (caster:getMod(MOD_IRIDESCENCE) >= 1) then
             if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1 or isHelixSpell(spell)) then
                 dayWeatherBonus = dayWeatherBonus + 0.10;
             end
@@ -772,10 +773,7 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
 
     local dayElement = VanadielDayElement();
     if (dayElement == dayStrong[ele]) then
-        local equippedLegs = caster:getEquipID(SLOT_LEGS);
-        if (equippedLegs == 15120 or equippedLegs == 15583) then
-            dayWeatherBonus = dayWeatherBonus + 0.05;
-        end
+        dayWeatherBonus = dayWeatherBonus + caster:getMod(MOD_DAY_NUKE_BONUS)/100; -- sorc. tonban(+1)/zodiac ring
         if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1 or isHelixSpell(spell)) then
             dayWeatherBonus = dayWeatherBonus + 0.10;
         end
@@ -785,8 +783,8 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
         end
     end
 
-    if dayWeatherBonus > 1.35 then
-        dayWeatherBonus = 1.35;
+    if dayWeatherBonus > 1.4 then
+        dayWeatherBonus = 1.4;
     end
 
     dmg = math.floor(dmg * dayWeatherBonus);
@@ -802,13 +800,23 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
 
     if (spell:getID() >= 245 and spell:getID() <= 248) then -- Drain/Aspir (II)
         mabbonus = 1 + caster:getMod(MOD_ENH_DRAIN_ASPIR)/100;
-		-- print(mabbonus);
+        -- print(mabbonus);
     else
         local mab = caster:getMod(MOD_MATT) + bonusmab;
-        if (spell:getElement() > 0 and spell:getElement() <= 6) then
-            mab = mab + caster:getMerit(blmMerit[spell:getElement()]);
+
+        local mab_crit = caster:getMod(MOD_MAGIC_CRITHITRATE);
+        if( math.random(1,100) < mab_crit ) then
+           mab = mab + ( 10 + caster:getMod(MOD_MAGIC_CRIT_DMG_INCREASE ) );
         end
-        mabbonus = (100 + mab) / (100 + target:getMod(MOD_MDEF));
+
+        local mdefBarBonus = 0;
+        if (ele > 0 and ele <= 6) then
+            mab = mab + caster:getMerit(blmMerit[ele]);
+            if (target:hasStatusEffect(barSpells[ele])) then -- bar- spell magic defense bonus
+                mdefBarBonus = target:getStatusEffect(barSpells[ele]):getSubPower();
+            end
+        end
+        mabbonus = (100 + mab) / (100 + target:getMod(MOD_MDEF) + mdefBarBonus);
     end
 
     if (mabbonus < 0) then
@@ -818,14 +826,7 @@ function addBonuses(caster, spell, target, dmg, bonusmab)
     dmg = math.floor(dmg * mabbonus);
 
     if (caster:hasStatusEffect(EFFECT_EBULLIENCE)) then
-        local equippedHead = caster:getEquipID(SLOT_HEAD);
-        if (equippedHead == 11183) then
-            dmg = dmg * 1.25; --savant's bonnet +1
-        elseif (equippedHead == 11083) then
-            dmg = dmg * 1.3; --savant's bonnet +2
-        else
-            dmg = dmg * 1.2;
-        end
+        dmg = dmg * 1.2 + caster:getMod(MOD_EBULLIENCE_AMOUNT)/100;
         caster:delStatusEffectSilent(EFFECT_EBULLIENCE);
     end
 
@@ -850,13 +851,10 @@ function addBonusesAbility(caster, ele, target, dmg, params)
     dmg = math.floor(dmg * magicDefense);
 
     local dayWeatherBonus = 1.00;
-    local equippedMain = caster:getEquipID(SLOT_MAIN);
-    local equippedWaist = caster:getEquipID(SLOT_WAIST);
     local weather = caster:getWeather();
 
     if (weather == singleWeatherStrong[ele]) then
-        -- Iridescence
-        if (equippedMain == 18632 or equippedMain == 18633) then
+        if (caster:getMod(MOD_IRIDESCENCE) >= 1) then
             if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1) then
                 dayWeatherBonus = dayWeatherBonus + 0.10;
             end
@@ -869,8 +867,7 @@ function addBonusesAbility(caster, ele, target, dmg, params)
             dayWeatherBonus = dayWeatherBonus - 0.10;
         end
     elseif (weather == doubleWeatherStrong[ele]) then
-        -- Iridescence
-        if (equippedMain == 18632 or equippedMain == 18633) then
+        if (caster:getMod(MOD_IRIDESCENCE) >= 1) then
             if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1) then
                 dayWeatherBonus = dayWeatherBonus + 0.10;
             end
@@ -886,10 +883,7 @@ function addBonusesAbility(caster, ele, target, dmg, params)
 
     local dayElement = VanadielDayElement();
     if (dayElement == dayStrong[ele]) then
-        local equippedLegs = caster:getEquipID(SLOT_LEGS);
-        if (equippedLegs == 15120 or equippedLegs == 15583) then
-            dayWeatherBonus = dayWeatherBonus + 0.05;
-        end
+        dayWeatherBonus = dayWeatherBonus + caster:getMod(MOD_DAY_NUKE_BONUS)/100; -- sorc. tonban(+1)/zodiac ring
         if (math.random() < 0.33 or caster:getMod(elementalObi[ele]) >= 1) then
             dayWeatherBonus = dayWeatherBonus + 0.10;
         end
@@ -899,17 +893,22 @@ function addBonusesAbility(caster, ele, target, dmg, params)
         end
     end
 
-    if dayWeatherBonus > 1.35 then
-        dayWeatherBonus = 1.35;
+    if dayWeatherBonus > 1.4 then
+        dayWeatherBonus = 1.4;
     end
 
     dmg = math.floor(dmg * dayWeatherBonus);
 
     local mab = 1;
+    local mdefBarBonus = 0;
+    if (ele > 0 and ele <= 6 and target:hasStatusEffect(barSpells[ele])) then -- bar- spell magic defense bonus
+        mdefBarBonus = target:getStatusEffect(barSpells[ele]):getSubPower();
+    end
+
     if (params ~= nil and params.bonusmab ~= nil and params.includemab == true) then
-        mab = (100 + caster:getMod(MOD_MATT) + params.bonusmab) / (100 + target:getMod(MOD_MDEF));
+        mab = (100 + caster:getMod(MOD_MATT) + params.bonusmab) / (100 + target:getMod(MOD_MDEF) + mdefBarBonus);
     elseif (params == nil or (params ~= nil and params.includemab == true)) then
-        mab = (100 + caster:getMod(MOD_MATT)) / (100 + target:getMod(MOD_MDEF));
+        mab = (100 + caster:getMod(MOD_MATT)) / (100 + target:getMod(MOD_MDEF) + mdefBarBonus);
     end
 
     if (mab < 0) then
@@ -1142,6 +1141,18 @@ function doNuke(V,M,caster,spell,target,hasMultipleTargetReduction,resistBonus,s
     --get the resisted damage
     dmg = dmg*resist;
     if (skill == NINJUTSU_SKILL) then
+        if (caster:getMainJob() == JOB_NIN) then -- NIN main gets a bonus to their ninjutsu nukes
+            local ninSkillBonus = 100;
+            if (spell:getID() % 3 == 2) then -- ichi nuke spell ids are 320, 323, 326, 329, 332, and 335
+                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(SKILL_NIN) - 50)/2); -- getSkillLevel includes bonuses from merits and modifiers (ie. gear)
+            elseif (spell:getID() % 3 == 0) then -- ni nuke spell ids are 1 more than their corresponding ichi spell
+                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(SKILL_NIN) - 125)/2);
+            else -- san nuke spell, also has ids 1 more than their corresponding ni spell
+                ninSkillBonus = 100 + math.floor((caster:getSkillLevel(SKILL_NIN) - 275)/2);
+            end
+            ninSkillBonus = utils.clamp(ninSkillBonus, 100, 200); -- bonus caps at +100%, and does not go negative
+            dmg = dmg * ninSkillBonus/100;
+        end
         -- boost with Futae
         if (caster:hasStatusEffect(EFFECT_FUTAE)) then
             dmg = math.floor(dmg * 1.50);
@@ -1190,22 +1201,14 @@ end
 
 function calculateBarspellPower(caster,enhanceSkill)
     local meritBonus = caster:getMerit(MERIT_BAR_SPELL_EFFECT);
+    local equipBonus = caster:getMod(MOD_BARSPELL_AMOUNT);
     --printf("Barspell: Merit Bonus +%d", meritBonus);
 
     if (enhanceSkill == nil or enhanceSkill < 0) then
         enhanceSkill = 0;
     end
 
-    local power = 40 + 0.2 * enhanceSkill + meritBonus;
-
-    local equippedLegs = caster:getEquipID(SLOT_LEGS);
-    if (equippedLegs == 15119) then
-        power = power + 20;
-    elseif (equippedLegs == 15582) then
-        power = power + 22;
-    elseif (equippedLegs == 10712) then
-        power = power + 25;
-    end
+    local power = 40 + 0.2 * enhanceSkill + meritBonus + equipBonus;
 
     return power;
 end

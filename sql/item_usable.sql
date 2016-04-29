@@ -574,6 +574,7 @@ INSERT INTO `item_usable` VALUES (4626,'scroll_of_stona',1,1,11,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4627,'scroll_of_viruna',1,1,11,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4628,'scroll_of_cursna',1,1,11,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4629,'scroll_of_holy',1,1,11,5,0,0,0,0);
+INSERT INTO `item_usable` VALUES (4630,'scroll_of_holy_ii',1,1,11,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4631,'scroll_of_dia',1,1,11,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4632,'scroll_of_dia_ii',1,1,11,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4636,'scroll_of_banish',1,1,11,5,0,0,0,0);
@@ -1666,6 +1667,8 @@ INSERT INTO `item_usable` VALUES (5914,'orichalcum_bullet_pouch',1,1,55,0,0,0,0,
 INSERT INTO `item_usable` VALUES (5915,'adaman_bullet_pouch',1,1,55,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5922,'walnut_cookie',1,1,29,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5923,'juglan_jumble',1,1,29,0,0,0,0,0);
+INSERT INTO `item_usable` VALUES (5932,'bottle_of_kitron_juice',1,1,26,0,0,0,0,0);
+INSERT INTO `item_usable` VALUES (5933,'flask_of_dragon_fruit_au_lait',1,1,26,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5934,'chocobiscuit',1,1,29,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6041,'pyrohelix_schema',1,1,12,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6042,'hydrohelix_schema',1,1,12,5,0,0,0,0);
@@ -2063,6 +2066,7 @@ INSERT INTO `item_usable` VALUES (19181,'moogles_largesse',1,12,0,0,9,10,259200,
 INSERT INTO `item_usable` VALUES (19204,'fiendtrapper',20,0,0,0,12,10,30,0);
 INSERT INTO `item_usable` VALUES (19246,'moggiebag',1,3,0,0,8,10,259200,0);
 INSERT INTO `item_usable` VALUES (26720,'sheep_cap_+1',1,2,55,0,1,30,86400,0);
+INSERT INTO `item_usable` VALUES (27556,'echad_ring',1,3,76,0,1,5,7200,0);
 INSERT INTO `item_usable` VALUES (28540,'warp_ring',1,8,80,3,1,8,600,0);
 /*!40000 ALTER TABLE `item_usable` ENABLE KEYS */;
 UNLOCK TABLES;

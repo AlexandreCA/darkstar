@@ -16,12 +16,12 @@ local path = {
 
 function onSpawn(npc)
     npc:initNpcAi();
-	npc:setPos(pathfind.first(path));
-	onPath(npc);
+    npc:setPos(pathfind.first(path));
+    onPath(npc);
 end;
 
 function onPath(npc)
-	pathfind.patrol(npc, path);
+    pathfind.patrol(npc, path);
 end;
 
 -----------------------------------
@@ -77,7 +77,7 @@ function onTrigger(player,npc)
         elseif (progress >= 10 or failed >= 11) then
             player:startEvent(0x00FA); -- happy with lucky egg
         end
-	else
+    else
         player:startEvent(0x00CE);
         npc:wait(-1);
     end
@@ -87,8 +87,8 @@ end;
 -----------------------------------
 
 function onEventUpdate(player,csid,option)
---printf("CSID: %u",csid);
---printf("RESULT: %u",option);
+    -- printf("CSID: %u",csid);
+    -- printf("RESULT: %u",option);
 end;
 
 -----------------------------------
@@ -96,14 +96,14 @@ end;
 -----------------------------------
 
 function onEventFinish(player,csid,option,npc)
---printf("CSID: %u",csid);
---printf("RESULT: %u",option);
+    -- printf("CSID: %u",csid);
+    -- printf("RESULT: %u",option);
 
     if (csid == 0x00F1) then    -- correct trade, finished quest and receive opo opo crown and 3 pamamas
         local FreeSlots = player:getFreeSlotsCount();
         if (FreeSlots >= 4) then
             player:tradeComplete();
-            player:addFame(KAZHAM, WIN_FAME*75);
+            player:addFame(KAZHAM, 75);
             player:completeQuest(OUTLANDS, THE_OPO_OPO_AND_I);
             player:addItem(13870);   -- opo opo crown
             player:messageSpecial(ITEM_OBTAINED,13870);

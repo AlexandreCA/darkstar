@@ -1,14 +1,15 @@
------------------------------------   
--- Area: Dangruf Wadi   
--- MOB:  Goblin Brigand   
------------------------------------   
+-----------------------------------
+-- Area: Dangruf Wadi
+--  MOB: Goblin Brigand
+-----------------------------------
 
-require("scripts/globals/groundsofvalor");   
+require("scripts/globals/groundsofvalor");
 
------------------------------------   
--- onMobDeath   
------------------------------------   
+-----------------------------------
+-- onMobDeath
+-----------------------------------
 
-function onMobDeath(mob,killer)   
-   checkGoVregime(killer,mob,642,2);
-end;   
+function onMobDeath(mob,killer,ally)
+    checkGoVregime(ally,mob,640,1);
+    checkGoVregime(ally,mob,642,2);
+end;

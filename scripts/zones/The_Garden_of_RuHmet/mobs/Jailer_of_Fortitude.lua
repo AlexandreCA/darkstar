@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: The Garden of Ru'Hmet
--- NPC:  Jailer_of_Fortitude
+--  NM:  Jailer of Fortitude
 -----------------------------------
 
 require("scripts/globals/status");
@@ -13,7 +13,7 @@ require("scripts/globals/magic");
 function onMobSpawn(mob)
     -- Give it two hour
     mob:setMobMod(MOBMOD_MAIN_2HOUR, 1);
-	mob:setMobMod(MOBMOD_2HOUR_MULTI, 1);
+    mob:setMobMod(MOBMOD_2HOUR_MULTI, 1);
     -- Change animation to humanoid w/ prismatic core
     mob:AnimationSub(1);
     mob:setModelId(1169);
@@ -23,7 +23,7 @@ end;
 -- onMobFight Action
 -----------------------------------
 
-function onMobFight(mob)
+function onMobFight(mob, target)
     local delay = mob:getLocalVar("delay");
     local LastCast = mob:getLocalVar("LAST_CAST");
     local spell = mob:getLocalVar("COPY_SPELL");
@@ -33,7 +33,7 @@ function onMobFight(mob)
         mob:setLocalVar("delay", 0);
     end;
 
-    if (IsMobDead(16921016)==false or IsMobDead(16921017)==false) then -- check for kf'ghrah
+    if (IsMobDead(16921016) == false or IsMobDead(16921017) == false) then -- check for kf'ghrah
         if (spell > 0 and mob:hasStatusEffect(EFFECT_SILENCE) == false) then
             if (delay >= 3) then
                 mob:castSpell(spell);
@@ -41,9 +41,9 @@ function onMobFight(mob)
                 mob:setLocalVar("delay", 0);
             else
                 mob:setLocalVar("delay", delay+1);
-            end;
-        end;
-    end;
+            end
+        end
+    end
 end;
 
 -----------------------------------
@@ -66,13 +66,20 @@ end;
 -- onMobDeath
 -----------------------------------
 
-function onMobDeath(mob, killer, npc)
+function onMobDeath(mob, killer, ally)
     -- Despawn the pets if alive
     DespawnMob(Kf_Ghrah_WHM);
     DespawnMob(Kf_Ghrah_BLM);
+end;
+
+-----------------------------------
+-- onMobDespawn
+-----------------------------------
+
+function onMobDespawn(mob)
     -- Set 15 mins respawn
     local qm1 = GetNPCByID(Jailer_of_Fortitude_QM);
-    qm1:hideNPC(900);
+    qm1:updateNPCHideTime(FORCE_SPAWN_QM_RESET_TIME);
 
     -- Move it to a random location
     local qm1position = math.random(1,5);
